@@ -3,6 +3,7 @@
 <?= $this->section('content') ?>
 <a href="/tambah">Tambah Produk</a>
 <div>
+    <p><?= session()->getFlashdata("status") ?? null ?></p>
     <table>
         <thead>
             <tr>
@@ -23,9 +24,9 @@
                     <td><?= $item->nama_barang; ?></td>
                     <td><?= $item->harga_barang; ?></td>
                     <td><?= $item->jmlh_stok_barang; ?></td>
-                    <td><img class="gambar" src="uploads/<?= $item->img_barang; ?>"></td>
+                    <td><img class="gambar" src="<?= base_url(); ?>/uploads/<?= $item->img_barang; ?>"></td>
                     <td><?= $item->kode_barang; ?></td>
-                    <td><button>Beli</button></td>
+                    <td><a href="<?= base_url(); ?>/beli/<?= $item->id_barang ?>">Beli</a></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

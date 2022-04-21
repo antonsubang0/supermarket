@@ -34,6 +34,8 @@ $routes->setAutoRoute(true);
 $routes->get('/', 'Home::index');
 $routes->get('/tambah', 'Home::tambah');
 $routes->post('/tambah', 'Home::store');
+$routes->get('/beli/(:num)', 'Home::beli/$1');
+
 
 /*
  * --------------------------------------------------------------------

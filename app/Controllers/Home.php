@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\KeranjangModel;
 use App\Models\StokBarangModel;
 use CodeIgniter\Files\File;
 
@@ -68,5 +69,25 @@ class Home extends BaseController
         session()->setFlashdata("status", "Berhasil dikirim");
         return redirect()->to('/');
         // dd($this->request->getVar());
+    }
+    public function beli($id)
+    {
+        $barangModel = new StokBarangModel();
+        $keranjangModel = new KeranjangModel();
+        $item = $barangModel->find($id);
+        $item1 = $keranjangModel->where('kode_barang', $item->kode_barang)->first();
+        if ($item->jmlh_stok_barang == 0) return redirect()->to('/');
+        if ($item1 == null) {
+            $data = [
+                'kode_barang' => $item->kode_barang,
+                'qty_barang' => 1
+            ];
+            $keranjangModel->insert($data);
+            $barangModel->set(['jmlh_stok_barang' => $item->jmlh_stok_barang - 1])->where('kode_barang', $item->kode_barang)->update();
+        } else {
+            $keranjangModel->set(['qty_barang' => $item1->qty_barang + 1])->where('kode_barang', $item->kode_barang)->update();
+            $barangModel->set(['jmlh_stok_barang' => $item->jmlh_stok_barang - 1])->where('kode_barang', $item->kode_barang)->update();
+        }
+        return redirect()->to('/');
     }
 }
