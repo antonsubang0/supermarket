@@ -4,7 +4,6 @@ namespace App\Controllers;
 
 use App\Models\KeranjangModel;
 use App\Models\StokBarangModel;
-use CodeIgniter\Files\File;
 
 class Home extends BaseController
 {
@@ -107,7 +106,7 @@ class Home extends BaseController
         if ($item->qty_barang == 1) {
             $keranjangModel->where('id_keranjang', $id)->delete();
             $barangModel->set(['jmlh_stok_barang' => $item1->jmlh_stok_barang + 1])->where('kode_barang', $item->kode_barang)->update();
-            return redirect()->to('/');
+            return redirect()->to('/keranjang');
         }
         $keranjangModel->set(['qty_barang' => $item->qty_barang - 1])->where('kode_barang', $item->kode_barang)->update();
         $barangModel->set(['jmlh_stok_barang' => $item1->jmlh_stok_barang + 1])->where('kode_barang', $item->kode_barang)->update();

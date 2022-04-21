@@ -17,6 +17,7 @@
         </thead>
         <tbody>
             <?php $i = 1;
+            $total = 0;
             foreach ($keranjang as $item) : ?>
                 <tr>
                     <td><?= $i++; ?></td>
@@ -30,9 +31,11 @@
                         <a href="<?= base_url(); ?>/discard/<?= $item->id_keranjang ?>">Discard</a>
                     </td>
                 </tr>
+                <?php $total = $total + ($item->harga_barang * $item->qty_barang); ?>
             <?php endforeach; ?>
         </tbody>
     </table>
+    <h3>Total : <?= $total == 0 ? $total : $total + 19000 ?></h3>
     <form action="" method="post">
         <input type="hidden" name="_method" value="DELETE" />
         <button>Checkout</button>
