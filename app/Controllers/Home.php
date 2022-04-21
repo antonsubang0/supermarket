@@ -11,7 +11,8 @@ class Home extends BaseController
     public function index()
     {
         $stockModel = new StokBarangModel();
-        $data['barang'] = $stockModel->findAll();
+        $data['barang'] = $stockModel->paginate(2);
+        $data['pager'] = $stockModel->pager;
         echo view('vi_barang', $data);
     }
     public function tambah()

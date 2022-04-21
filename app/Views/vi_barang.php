@@ -31,6 +31,7 @@
             <?php endforeach; ?>
         </tbody>
     </table>
+    <?= $pager->links() ?>
     <a href="<?= base_url(); ?>/keranjang">Keranjang</a>
 </div>
 <?= $this->endSection() ?>
