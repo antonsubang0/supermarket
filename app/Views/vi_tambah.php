@@ -1,6 +1,7 @@
 <?= $this->extend('layout/layout') ?>
 
 <?= $this->section('content') ?>
+<a href="<?= base_url(); ?>">Kembali</a>
 <form method="post" enctype="multipart/form-data">
     <?= csrf_field(); ?>
     <div>

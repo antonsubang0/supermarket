@@ -90,4 +90,49 @@ class Home extends BaseController
         }
         return redirect()->to('/');
     }
+
+    public function cart()
+    {
+        $stockModel = new KeranjangModel();
+        $data['keranjang'] = $stockModel->keranjangBarang()->findAll();
+        echo view('vi_keranjang', $data);
+    }
+    public function minus($id)
+    {
+        $keranjangModel = new KeranjangModel();
+        $barangModel = new StokBarangModel();
+        $item = $keranjangModel->find($id);
+        $item1 = $barangModel->where('kode_barang', $item->kode_barang)->first();
+        if ($item->qty_barang == 1) {
+            $keranjangModel->where('id_keranjang', $id)->delete();
+            $barangModel->set(['jmlh_stok_barang' => $item1->jmlh_stok_barang + 1])->where('kode_barang', $item->kode_barang)->update();
+            return redirect()->to('/');
+        }
+        $keranjangModel->set(['qty_barang' => $item->qty_barang - 1])->where('kode_barang', $item->kode_barang)->update();
+        $barangModel->set(['jmlh_stok_barang' => $item1->jmlh_stok_barang + 1])->where('kode_barang', $item->kode_barang)->update();
+        return redirect()->to('/keranjang');
+    }
+    public function plus($id)
+    {
+        $keranjangModel = new KeranjangModel();
+        $barangModel = new StokBarangModel();
+        $item = $keranjangModel->find($id);
+        $item1 = $barangModel->where('kode_barang', $item->kode_barang)->first();
+        if ($item1->jmlh_stok_barang == 0) {
+            return redirect()->to('/keranjang');
+        }
+        $keranjangModel->set(['qty_barang' => $item->qty_barang + 1])->where('kode_barang', $item->kode_barang)->update();
+        $barangModel->set(['jmlh_stok_barang' => $item1->jmlh_stok_barang - 1])->where('kode_barang', $item->kode_barang)->update();
+        return redirect()->to('/keranjang');
+    }
+    public function discard($id)
+    {
+        $keranjangModel = new KeranjangModel();
+        $barangModel = new StokBarangModel();
+        $item = $keranjangModel->find($id);
+        $item1 = $barangModel->where('kode_barang', $item->kode_barang)->first();
+        $keranjangModel->where('id_keranjang', $id)->delete();
+        $barangModel->set(['jmlh_stok_barang' => $item1->jmlh_stok_barang + $item->qty_barang])->where('kode_barang', $item->kode_barang)->update();
+        return redirect()->to('/');
+    }
 }
