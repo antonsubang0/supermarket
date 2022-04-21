@@ -136,4 +136,11 @@ class Home extends BaseController
         $barangModel->set(['jmlh_stok_barang' => $item1->jmlh_stok_barang + $item->qty_barang])->where('kode_barang', $item->kode_barang)->update();
         return redirect()->to('/');
     }
+    public function checkout()
+    {
+        $keranjangModel = new KeranjangModel();
+        $keranjangModel->truncate();
+        session()->setFlashdata("status", "Berhasil checkout");
+        return redirect()->to('/');
+    }
 }

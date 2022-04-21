@@ -33,5 +33,9 @@
             <?php endforeach; ?>
         </tbody>
     </table>
+    <form action="" method="post">
+        <input type="hidden" name="_method" value="DELETE" />
+        <button>Checkout</button>
+    </form>
 </div>
 <?= $this->endSection() ?>

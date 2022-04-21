@@ -39,6 +39,7 @@ $routes->get('/keranjang', 'Home::cart');
 $routes->get('/plus/(:num)', 'Home::plus/$1');
 $routes->get('/minus/(:num)', 'Home::minus/$1');
 $routes->get('/discard/(:num)', 'Home::discard/$1');
+$routes->delete('/keranjang', 'Home::checkout');
 
 
 /*
