@@ -53,7 +53,7 @@ class Home extends BaseController
             $huruf = str_split($nama);
             $char = $huruf[0] . $huruf[1];
         }
-        $kodeBarang = $char . sprintf("%03s", $nomor);
+        $kodeBarang = $char . sprintf("%03s", $nomor+1);
 
         $file = $this->request->getFile('image');
         $newName = $file->getRandomName();
